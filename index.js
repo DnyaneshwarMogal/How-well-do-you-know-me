@@ -1,15 +1,17 @@
-"use strict";
 const readlineSync = require("readline-sync");
+const chalk= require('chalk');
 
-console.log("  Let's find out how well do you know me!! 🧐  \n");
+console.log(chalk.black.bold.bgYellow("  Let's find out how well do you know me!! 🧐  \n"));
 
-const userName = readlineSync.question(" 😄 Please enter your name : ");
+const userName = readlineSync.question(chalk.red.bold(" 😄 Please enter your name : "));
 
-console.log(
+console.log(chalk.red(
   "\nHi " +
     userName +
     ". Get ready for Level 1. 🤩\nEnter a/ b/ c for each question to answer. For each correct answer you will get 2 points."
-);
+));
+
+console.log('\n----------------------------------------------------------\n');
 
 let score = 0;
 
@@ -26,7 +28,7 @@ const question2 = {
 };
 
 const question3 = {
-  que: "What is my birthdate?\na.10Th December \nb.9Th December \nc.8Th December",
+  que: "When is my birthday?\na.10Th December \nb.9Th December \nc.8Th December",
   ans: "c",
   description: "See you forgot it again. 8Th December.",
 };
@@ -50,7 +52,7 @@ const question6 = {
 };
 
 const question7 = {
-  que: "Which movie is my favourite one?a.The Godfather \nb.The Dark Knight \nc.The Shawshank Redemption",
+  que: "Which movie is my favourite one?\na.The Godfather \nb.The Dark Knight \nc.The Shawshank Redemption",
   ans: "b",
   description: "This one was easy. Correct Answer is b.The Dark Knight",
 };
@@ -74,7 +76,7 @@ const question10 = {
 };
 
 //saving all questions in array
-const questionSet1 = [
+const questionSet = [
   question1,
   question2,
   question3,
@@ -86,3 +88,44 @@ const questionSet1 = [
   question9,
   question10,
 ];
+
+//posting quiz and validating answers
+
+for(let i=0; i<questionSet.length; i++){
+if(i===3){
+  if(score>=4){
+  console.log("Congratulations! You have entered Level 2 🤩");
+  }
+  else{
+    console.log("Aww! you failed level 1");
+    break;
+  }
+}
+if(i===6){
+  if(score>=8){
+  console.log("Congratulations! You have entered Final Level 🤩. Get ready for the toughest questions.");
+  }
+  else{
+    console.log("Aww! you failed level 2");
+    break;
+  }
+}
+checkScore(i+1,questionSet[i].que, questionSet[i].ans, questionSet[i].description);
+}
+
+//Printing final score
+console.log("Yay! Your Final Score is "+score);
+
+//function to validate answers and update score
+function checkScore(queNo, checkQue, checkAns, description){
+  
+  const userAns= readlineSync.keyIn(chalk.cyanBright("\n"+queNo+") "+checkQue+ "\n"),{limit: '$<a-c>'});
+  if(userAns===checkAns){
+    console.log(chalk.green("You are absolutely right. You get 2 points 🎉"));
+    score+=2;
+  }
+  else{
+    console.log(chalk.redBright(`You are wrong.\n${description}`));
+  }
+  console.log(chalk.yellowBright("Your current score is " +score));
+  console.log('\n----------------------------------------------------------\n');
