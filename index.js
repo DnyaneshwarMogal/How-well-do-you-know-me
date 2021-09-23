@@ -129,3 +129,4 @@ function checkScore(queNo, checkQue, checkAns, description){
   }
   console.log(chalk.yellowBright("Your current score is " +score));
   console.log('\n----------------------------------------------------------\n');
+}
